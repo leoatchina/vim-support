@@ -36,7 +36,7 @@ class FileExplorer(Explorer):
     def __init__(self):
         self._cur_dir = ''
         self._content = []
-        self._cache_dir = os.path.join(lfEval("g:Lf_CacheDiretory"),
+        self._cache_dir = os.path.join(lfEval("g:Lf_CacheDirectory"),
                                        '.LfCache',
                                        'python' + lfEval("g:Lf_PythonVersion"),
                                        'file')
@@ -449,7 +449,7 @@ class FileExplorer(Explorer):
 
     def getContent(self, *args, **kwargs):
         if len(args) > 0:
-            if os.path.exists(lfDecode(args[0])):
+            if os.path.exists(os.path.expanduser(lfDecode(args[0]))):
                 lfCmd("silent cd %s" % args[0])
             else:
                 lfCmd("echohl ErrorMsg | redraw | echon "
@@ -600,9 +600,8 @@ class FileExplManager(Manager):
                         not os.path.dirname(vim.current.buffer.name).startswith(orig_cwd):
                     os.chdir(os.path.dirname(vim.current.buffer.name))
 
+        super(FileExplManager, self).startExplorer(win_pos, *args, **kwargs)
         try:
-            super(FileExplManager, self).startExplorer(win_pos, *args, **kwargs)
-
             if int(lfEval("&autochdir")) == 0 and os.getcwd() != orig_cwd:
                 os.chdir(orig_cwd)
         except:

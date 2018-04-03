@@ -73,6 +73,8 @@ command! -nargs=0 -bar       SignifyToggle          call sy#toggle()
 command! -nargs=0 -bar       SignifyToggleHighlight call sy#highlight#line_toggle()
 
 " Init: mappings {{{1
+let s:cpoptions = &cpoptions
+set cpoptions+=B
 
 " hunk jumping
 nnoremap <silent> <expr> <plug>(signify-next-hunk) &diff
@@ -97,10 +99,13 @@ xnoremap <silent> <plug>(signify-motion-inner-visual)  :<c-u>call sy#util#hunk_t
 onoremap <silent> <plug>(signify-motion-outer-pending) :<c-u>call sy#util#hunk_text_object(1)<cr>
 xnoremap <silent> <plug>(signify-motion-outer-visual)  :<c-u>call sy#util#hunk_text_object(1)<cr>
 
+let &cpoptions = s:cpoptions
+unlet s:cpoptions
+
 " Function: save {{{1
 
 function! s:save()
-  if exists('b:sy') && b:sy.active && &modified
+  if exists('b:sy') && b:sy.active && &modified && &modifiable && ! &readonly
     write
   endif
 endfunction
