@@ -20,27 +20,30 @@ GTAGS.CONF(5)                 File Formats Manual                GTAGS.CONF(5)
 
        (3) [project root]/gtags.conf
 
-       (4) $HOME/.globalrc
+       (4) [project root]/[objdir]/gtags.conf
 
-       (5) /etc/gtags.conf
+       (5) $HOME/.globalrc
 
-       (6) [sysconfdir]/gtags.conf
+       (6) /etc/gtags.conf
+
+       (7) [sysconfdir]/gtags.conf
 
        [sysconfdir]  is  '/usr/local/etc' by default; you can change it by the
-       --sysconfdir option of the configure script.
+       --sysconfdir option of the  configure  script.  [objdir]  is  'obj'  by
+       default; you can change it by [1mGTAGSOBJDIR [22mor [1mMAKEOBJDIR[22m.
 
-       Syntax is similar to [1mtermcap[22m(5) except for  some  extensions  described
+       Syntax  is  similar  to [1mtermcap[22m(5) except for some extensions described
        later.  A file includes one or more records. You should select a record
-       using a label.  Default label is 'default'. If [1mGTAGSLABEL [22mis  set,  its
-       value  is  used.  Please be aware the meaning of 'default' is different
+       using  a  label.  Default label is 'default'. If [1mGTAGSLABEL [22mis set, its
+       value is used.  Please be aware the meaning of 'default'  is  different
        from that of [1mtermcap[22m(5).
 
-       Lines starting with '#' are ignored.  A record consists of one or  more
-       fields  separated by ':' and ends with a newline.  The first field must
-       have a label name. Each field of the rest has  a  variable  definition.
+       Lines  starting with '#' are ignored.  A record consists of one or more
+       fields separated by ':' and ends with a newline.  The first field  must
+       have  a  label  name. Each field of the rest has a variable definition.
        There are three types in those variables.
 
-       Boolean:  This type has no value; existence of variable means true else
+       Boolean: This type has no value; existence of variable means true  else
        false.
 
        Number: This type has a number value after '#'.
@@ -51,31 +54,31 @@ GTAGS.CONF(5)                 File Formats Manual                GTAGS.CONF(5)
        If data includes ':' or newline, you need to quote it by '\'.  An empty
        field is permitted, but it doesn't make sense.
 
-       When  there  is  more than one definition, the previous one is adopted.
+       When there is more than one definition, the previous  one  is  adopted.
        Exceptionally, all values of [1mskip[22m, [1mlangmap [22mand [1mgtags_parser [22mare adopted
        and connected respectively.
 
 [1mVariable substitution[0m
-       Variable  substitution similar to [1msh[22m(1) is available.  You can refer to
-       any string variable using '$' prefix. For example, the following [1mb  [22mhas
+       Variable substitution similar to [1msh[22m(1) is available.  You can refer  to
+       any  string variable using '$' prefix. For example, the following [1mb [22mhas
        a value 'XYZ'.
        :a=Y:b=X${a}Z:
 
 [1mIncluding another record[0m
-       [1mTc  [22mis  a  special variable; it reads in definitions in another record.
+       [1mTc [22mis a special variable; it reads in definitions  in  another  record.
        It is similar to the [1mtc [22mof [1mtermcap[22m(5).  Syntax is as follows:
        [1mtc[22m=[4mlabel[24m[@[4mfile[24m]
-       If only a [4mlabel[24m is given, [1mtc [22mis read from a  record  specified  by  the
-       [4mlabel[24m  in  the  same  file.  If  @[4mfile[24m is also given, [1mtc [22mis read from a
+       If  only  a  [4mlabel[24m  is given, [1mtc [22mis read from a record specified by the
+       [4mlabel[24m in the same file. If @[4mfile[24m is also  given,  [1mtc  [22mis  read  from  a
        record specified by the [4mlabel[24m in the specified [4mfile[24m.  [4mFile[24m should be an
-       absolute  path, and should not include variables.  Different from [1mterm-[0m
+       absolute path, and should not include variables.  Different from  [1mterm-[0m
        [1mcap[22m(5), you can use [1mtc [22manytime anywhere.
 
 [1mCONFIGURATION[0m
        About variables for each command, please see each manual.
 
-       You can use the following environment variables as a  string  variable.
-       If  these variables are set then environment variables of the same name
+       You  can  use the following environment variables as a string variable.
+       If these variables are set then environment variables of the same  name
        are set before command execution.
        [1mGREP_COLOR[0m
        [1mGREP_COLORS[0m
@@ -93,8 +96,8 @@ GTAGS.CONF(5)                 File Formats Manual                GTAGS.CONF(5)
        [1mMAKEOBJDIRPREFIX[0m
        [1mTMPDIR[0m
 
-       The following variables are also available as a  string  variable.   By
-       default,  each  of  them  has  a  directory path given by the configure
+       The  following  variables  are also available as a string variable.  By
+       default, each of them has a  directory  path  given  by  the  configure
        script.
        [1mbindir[0m
        [1mdatadir[0m
@@ -103,15 +106,15 @@ GTAGS.CONF(5)                 File Formats Manual                GTAGS.CONF(5)
        [1msysconfdir[0m
 
 [1mENVIRONMENT[0m
-       The following environment variables affect the execution  of  the  com-
+       The  following  environment  variables affect the execution of the com-
        mands.
 
        [1mGTAGSCONF[0m
-              If  this  variable  is set, the value is used as a configuration
+              If this variable is set, the value is used  as  a  configuration
               file.
 
        [1mGTAGSLABEL[0m
-              If this variable is set, the value is used as  a  label  of  the
+              If  this  variable  is  set, the value is used as a label of the
               configuration file.  The default is [4mdefault[24m.
 
 [1mSEE ALSO[0m

@@ -3,15 +3,15 @@ GOZILLA(1)                  General Commands Manual                 GOZILLA(1)
 
 
 [1mNAME[0m
-       gozilla - force mozilla to display specified part of a source file
+       gozilla - force a browser to display specified part of a source file
 
 [1mSYNOPSIS[0m
        [1mgozilla [22m[-b browser][-p][+no] file
        [1mgozilla [22m[-b browser][-p] -d name
 
 [1mDESCRIPTION[0m
-       [1mGozilla  [22mforces  [1mmozilla  [22mto  display  specified part of a source file.
-       [1mGozilla [22mcan be used with other browsers like firefox and epiphany.
+       [1mGozilla  [22mforces  firefox  to  display  specified part of a source file.
+       [1mGozilla [22mcan be used with other browsers like chrome and epiphany.
 
        In advance of  using  this  command,  you  must  execute  [1mgtags[22m(1)  and
        [1mhtags[22m(1)  at the root directory of the project to make tag files.  Then
@@ -34,7 +34,7 @@ GOZILLA(1)                  General Commands Manual                 GOZILLA(1)
        [1m+no    [22mLine number.
 
        [1m-b [4m[22mbrowser[0m
-              Browser to use. By default, it is assumed [1mmozilla[22m.
+              Browser to use. By default, it is assumed [1mfirefox[22m.
 
        [1m-d [4m[22mname[0m
               Print definitions.
@@ -64,15 +64,12 @@ GOZILLA(1)                  General Commands Manual                 GOZILLA(1)
        'HTML/MAP'
               Mapping file for converting tag name into the path of tag list.
 
-       '$HOME/.gozillarc'
-              Alias file. Please read the source code for details.
-
        'gtags.conf', '$HOME/.globalrc'
-              See [1mgtags.conf[22m(5).
+              Configuration data for GNU GLOBAL.  See [1mgtags.conf[22m(5).
 
 [1mENVIRONMENT[0m
        [1mBROWSER[0m
-              Browser  to use. By default, it is assumed [1mmozilla[22m.  If you want
+              Browser  to use. By default, it is assumed [1mfirefox[22m.  If you want
               to load the default browser in OSX, you may set this variable to
               [1mosx-default[22m.
 
@@ -88,32 +85,26 @@ GOZILLA(1)                  General Commands Manual                 GOZILLA(1)
        $ htags
        $ global -x main
        main              82 ctags.c          main(argc, argv)
-       $ mozilla &
        $ gozilla +82 ctags.c
        $ gozilla -d main
 
-       $ firefox &
-       $ gozilla -b firefox +82 ctags.c
+       $ gozilla -b lynx +82 ctags.c
 
 [1mDIAGNOSTICS[0m
        [1mGozilla [22mexits with a non-0 value if an error occurred, 0 otherwise.
 
 [1mSEE ALSO[0m
-       [1mglobal[22m(1), [1mgtags[22m(1),  [1mhtags[22m(1),  [1mfirefox[22m(1),  [1mepiphany[22m(1),  [1mmozilla[22m(1),
+       [1mglobal[22m(1), [1mgtags[22m(1),  [1mhtags[22m(1),  [1mepiphany[22m(1),  [1mmozilla[22m(1),  [1mfirefox[22m(1),
        [1mgtags.conf[22m(5).
 
        GNU GLOBAL source code tag system
        (http://www.gnu.org/software/global/).
 
-[1mBUGS[0m
-       [1mGozilla  [22mcan accept not only source files but also text files, directo-
-       ries, HTML files and even URLs, because it is omnivorous.
-
 [1mAUTHORS[0m
        Shigio YAMAGUCHI.
 
 [1mHISTORY[0m
-       The [1mgozilla [22mcommand appeared in FreeBSD 2.2.2 but was not installed  by
+       The  [1mgozilla [22mcommand appeared in FreeBSD 2.2.2 but was not installed by
        default.
 
 
