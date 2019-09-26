@@ -92,54 +92,6 @@ color brightblue "(^|[[:space:]])#.*$"
 
 # Trailing whitespace.
 color ,green "[[:space:]]+$"
-## Here is an example for C/C++.
-
-syntax c "\.([ch](pp|xx)?|C|cc|c\+\+|H|hh|ii?)$"
-magic "^(C|C\+\+) (source|program)"
-comment "//"
-
-# Constants.
-color brightred "\<[A-Z_][0-9A-Z_]+\>"
-# Labels.
-###color brightmagenta "^[[:space:]]*[A-Z_a-z]+:[[:space:]]*$"
-
-color green "\<(float|double|bool|true|false|char|int|short|long|sizeof|typeid|enum|void|auto|static|const|struct|union|typedef|extern|(un)?signed|inline)\>"
-color green "\<(class|namespace|template|public|protected|private|typename|this|nullptr|friend|virtual|override|final|noexcept|using|mutable|volatile|register|explicit|export)\>"
-color green "\<(align(as|of)|decltype|constexpr|thread_local|restrict|_Complex|_Bool|_Imaginary|_Atomic|_Thread_local|_Noreturn|_Align(as|of))\>"
-color brightyellow "\<(for|if|while|do|else|case|default|switch)\>"
-color brightyellow "\<(try|throw|catch|operator|new|delete|(static|dynamic|const|reinterpret)_cast|static_assert|_Static_assert)\>"
-color magenta "\<(goto|continue|break|return)\>"
-color brightyellow "'([^'\]|(\\["'abefnrtv\\]))'" "'\\(([0-3]?[0-7]{1,2}))'" "'\\x[0-9A-Fa-f]{1,2}'"
-color brightmagenta "\<(_Pragma|__has_include|_Generic)\>"
-
-# Types.
-color brightgreen "\<((s?size)|ptrdiff|(u?int((_(fast|least))?(8|16|32|64)|ptr|max))|wchar|char(16|32))_t\>"
-
-# GCC builtins.
-###color cyan "__attribute__[[:space:]]*\(\([^)]*\)\)" "__(aligned|asm|builtin|hidden|inline|packed|restrict|section|typeof|weak)__"
-
-# Strings.  In general you will want your strings and comments to come last,
-# because highlighting rules are applied in the order they are read in.
-color brightyellow ""(\\.|[^\\"])*""
-# Multiline strings.  This regex is VERY resource intensive,
-# and sometimes colours things that shouldn't be coloured.
-###color brightyellow start=""(\\.|[^"])*\\[[:space:]]*$" end="^(\\.|[^"])*""
-
-# Preprocessor directives.
-color brightgreen "^[[:space:]]*#[[:space:]]*include(_next)?[[:space:]]+((<[^>]*>)|("[^"]*"))"
-color brightcyan "^[[:space:]]*#[[:space:]]*(else|endif|include(_next)?)\>"
-color brightcyan start="^[[:space:]]*#[[:space:]]*(define|undef|if(n?def)?|elif|warning|error|pragma)\>" end="(\`|[^\\])$"
-color brightcyan "^[[:space:]]*#[[:space:]]*[[:digit:]]+.*"
-
-# Comments.
-color brightblue "//.*"
-color brightblue start="/\*" end="\*/"
-
-# Reminders.
-color brightwhite,yellow "\<(FIXME|TODO|XXX)\>"
-
-# Trailing whitespace.
-color ,green "[[:space:]]+$"
 ## Colouring for Changelogs.
 
 syntax changelog "Change[Ll]og[^/]*$"
@@ -187,6 +139,60 @@ color magenta "\<(APPLE|UNIX|WIN32|CYGWIN|BORLAND|MINGW|MSVC(_IDE|60|71|80|90)?)
 
 color brightblue "(^|[[:space:]])#.*"
 color ,green "[[:space:]]+$"
+## Here is an example for C/C++.
+
+syntax c "\.([ch](pp|xx)?|C|cc|c\+\+|H|hh|ii?)$"
+magic "^(C|C\+\+) (source|program)"
+comment "//"
+
+# Macros.
+color brightred "\<[A-Z_][0-9A-Z_]+\>"
+# Labels.
+###color brightmagenta "^[[:space:]]*[A-Z_a-z]+:[[:space:]]*$"
+
+# Keywords.
+color green "\<(float|double|bool|char|int|short|long|sizeof|typeid|enum|void|auto|static|register|const|volatile|struct|union|typedef|extern|(un)?signed|inline)\>"
+color green "\<(wchar|char(16|32))_t\>"
+color green "\<(class|namespace|template|public|protected|private|typename|friend|virtual|noexcept|using|mutable|explicit|export)\>"
+color green "\<(align(as|of)|decltype|constexpr|consteval|thread_local|restrict|_Complex|_Bool|_Imaginary|_Atomic|_Thread_local|_Noreturn|_Align(as|of))\>"
+color green "\<(operator|new|delete|(static|dynamic|const|reinterpret)_cast|static_assert|_Static_assert)\>"
+color brightyellow "\<(for|if|while|do|else|case|default|switch|try|catch)\>"
+color brightmagenta "\<(goto|continue|break|return|throw)\>"
+color brightgreen "\<(true|false|this|nullptr)\>"
+
+# Special identifiers.
+color red "\<([[:lower:]][[:lower:]_]*|s?size|ptrdiff|u?int((_(fast|least))?(8|16|32|64)|ptr|max))_t\>"
+color red "\<(std|override|final|assert|errno)\>"
+
+# Operators and punctuators.
+color brightcyan "\<(defined|_Pragma|__has_include|_Generic)\>"
+color cyan "[].+*/%=@&|!^~?:,;(){}<>[-]"
+color cyan "\<((and|or|xor|not)(_eq)?|bit(and|or)|compl)\>"
+
+# Literals.
+color yellow "'([^'\]|(\\["'abefnrtv\\]))'" "'\\(([0-3]?[0-7]{1,2}))'" "'\\x[0-9A-Fa-f]{1,2}'"
+color yellow "\<[0-9]+(\.[0-9]*)?([Ee][+-]?[0-9]+)?\>"
+color yellow "\<0[Xx][0-9A-Fa-f]+(\.[0-9A-Fa-f]*)?([Pp][+-]?[0-9]+)?\>"
+color yellow "\<0[Bb][01]+\>"
+color yellow ""(\\.|[^\\"])*""
+
+# Preprocessor directives.
+color brightgreen "^[[:space:]]*#[[:space:]]*include(_next)?[[:space:]]+((<[^>]*>)|("[^"]*"))"
+color brightcyan start="^[[:space:]]*#[[:space:]]*(if(n?def)?|elif|define|undef|warning|error|pragma)\>" end="(\`|[^\\])$"
+color brightcyan "^[[:space:]]*#[[:space:]]*(else|endif|include(_next)?)?\>"
+
+# GCC builtins.
+###color cyan "__attribute__[[:space:]]*\(\([^)]*\)\)" "__(aligned|asm|builtin|hidden|inline|packed|restrict|section|typeof|weak)__"
+
+# Comments.
+color brightblue "//.*"
+color brightblue start="/\*" end="\*/"
+
+# Reminders.
+color red,yellow "\<(FIXME|TODO|XXX)\>"
+
+# Trailing whitespace.
+color ,green "[[:space:]]+$"
 ## Here is an example for CSS files.
 
 syntax css "\.css$"
@@ -232,7 +238,7 @@ color cyan "^[[:space:]]*#.*"
 color ,red " +	+"
 
 # Nano's name, including version.
-color brightred "(GNU )?[Nn]ano [1-3]\.[0-9][-.[:alnum:]]*\>"
+color brightred "(GNU )?[Nn]ano [1-4]\.[0-9][-.[:alnum:]]*\>"
 
 # Email addresses.
 color magenta "<[[:alnum:].%_+-]+@[[:alnum:].-]+\.[[:alpha:]]{2,}>"
@@ -663,21 +669,26 @@ color green "(^|[[:space:]]+)#.*"
 
 # Trailing whitespace.
 color ,green "[[:space:]]+$"
-## Here is an example for manpages.
+## Syntax highlighting for man pages.
 
 syntax man "\.[1-9]x?$"
 magic "troff or preprocessor input"
 comment ".\""
 
-color green "\.(SH|SS|TH) .*"
-color brightgreen "\.(SH|SS|TH) " "\.([HIT]P)"
-color brightred "\.(B[IR]?|I[BR]?|R[BI]|S[BM]) .*"
-color brightblue "\.(B[IR]?|I[BR]?|R[BI]|S[BM]) " "\.([LP]?P)$"
+# Section headers, title line, and indented paragraphs.
+color green "^\.(SH|SS|TH) .*"
+color brightgreen "^\.(SH|SS|TH) " "^\.([HIT]P)"
+# Type faces, and normal paragraphs.
+color brightred "^\.(B[IR]?|I[BR]?|R[BI]|S[BM]) .*"
+color brightblue "^\.(B[IR]?|I[BR]?|R[BI]|S[BM]) " "^\.([LP]?P)$"
+# Inline type faces.
 color magenta "\\f[BIPR]"
-color yellow "\.(br|DT|RS|RE|PD)"
+# Relative margins, hyperlinks, and various other stuff.
+color yellow "^\.(RS|RE|UR|UE|PD|DT)"
+color yellow "^\.(ad|bp|br|ce|de|ds|el|ie|if|fi|ft|hy|ig|in|na|ne|nf|nh|ps|so|sp|ti|tr)"
 
 # Comments.
-color cyan "\.?\\\".*"
+color cyan "(^\.)?\\\".*"
 
 # Trailing whitespace.
 color ,green "[[:space:]]+$"
@@ -719,9 +730,10 @@ comment "#"
 icolor brightred "^[[:space:]]*((un)?(bind|set)|include|syntax|header|magic|comment|linter|i?color|extendsyntax).*"
 
 # Keywords
-icolor brightgreen "^[[:space:]]*(set|unset)[[:space:]]+(afterends|allow_insecure_backup|atblanks|autoindent|backup|backwards|boldtext|casesensitive|constantshow|cutfromcursor|fill[[:space:]]+-?[[:digit:]]+|historylog|linenumbers|locking|morespace|mouse|multibuffer|noconvert|nohelp|nopauses|nonewlines|nowrap|positionlog|preserve|quickblank|quiet|rebinddelete|rebindkeypad|regexp|showcursor|smarthome|smooth|softwrap|suspend|tabsize[[:space:]]+[1-9][0-9]*|tabstospaces|tempfile|trimblanks|unix|view|wordbounds|zap)\>"
-icolor yellow "^[[:space:]]*set[[:space:]]+((error|function|key|number|selected|status|title)color)[[:space:]]+(bright)?(white|black|red|blue|green|yellow|magenta|cyan|normal)?(,(white|black|red|blue|green|yellow|magenta|cyan|normal))?\>"
-icolor brightgreen "^[[:space:]]*set[[:space:]]+(backupdir|brackets|errorcolor|functioncolor|keycolor|matchbrackets|numbercolor|operatingdir|punct|quotestr|selectedcolor|speller|statuscolor|titlecolor|whitespace|wordchars)[[:space:]]+"
+icolor brightgreen "^[[:space:]]*(set|unset)[[:space:]]+(afterends|allow_insecure_backup|atblanks|autoindent|backup|backwards|boldtext|breaklonglines|casesensitive|constantshow|cutfromcursor|emptyline|finalnewline|historylog|jumpyscrolling|linenumbers|locking|morespace|mouse|multibuffer|noconvert|nohelp|nopauses|nonewlines|nowrap|positionlog|preserve|quickblank|quiet|rebinddelete|rebindkeypad|regexp|showcursor|smarthome|smooth|softwrap|suspend|tabstospaces|tempfile|trimblanks|unix|view|wordbounds|zap)\>"
+icolor yellow "^[[:space:]]*set[[:space:]]+((error|function|key|number|selected|status|stripe|title)color)[[:space:]]+(bright)?(white|black|red|blue|green|yellow|magenta|cyan|normal)?(,(white|black|red|blue|green|yellow|magenta|cyan|normal))?\>"
+icolor brightgreen "^[[:space:]]*set[[:space:]]+(backupdir|brackets|errorcolor|functioncolor|keycolor|matchbrackets|numbercolor|operatingdir|punct|quotestr|selectedcolor|speller|statuscolor|stripecolor|titlecolor|whitespace|wordchars)[[:space:]]+"
+icolor brightgreen "^[[:space:]]*set[[:space:]]+(fill[[:space:]]+-?[[:digit:]]+|(guidestripe|tabsize)[[:space:]]+[1-9][0-9]*)\>"
 icolor brightgreen "^[[:space:]]*bind[[:space:]]+((\^([[:alpha:]]|[]@\^_]|Space)|M-([[:alpha:]]|[]!"#$%&'()*+,./0-9:;<=>?@\^_`{|}~-]|Space))|F([1-9]|1[0-6])|Ins|Del)[[:space:]]+([[:alpha:]]+|".*")[[:space:]]+(all|main|search|replace(with)?|yesno|gotoline|writeout|insert|ext(ernal)?cmd|help|spell|linter|browser|whereisfile|gotodir)([[:space:]]+#|[[:space:]]*$)"
 icolor brightgreen "^[[:space:]]*unbind[[:space:]]+((\^([[:alpha:]]|[]@\^_]|Space)|M-([[:alpha:]]|[]!"#$%&'()*+,./0-9:;<=>?@\^_`{|}~-]|Space))|F([1-9]|1[0-6])|Ins|Del)[[:space:]]+(all|main|search|replace(with)?|yesno|gotoline|writeout|insert|ext(ernal)?cmd|help|spell|linter|browser|whereisfile|gotodir)([[:space:]]+#|[[:space:]]*$)"
 icolor brightgreen "^[[:space:]]*extendsyntax[[:space:]]+[[:alpha:]]+[[:space:]]+(i?color|header|magic|comment|linter)[[:space:]]+.*"
@@ -729,7 +741,7 @@ icolor brightgreen "^[[:space:]]*(syntax|linter)[[:space:]]+[^[:blank:]]+"
 icolor green "^[[:space:]]*((un)?(bind|set)|include|syntax|header|magic|comment|linter|extendsyntax)\>"
 
 # Strings
-color brightmagenta "".+"([[:space:]]|$)"
+color brightmagenta "([[:space:]]|(start|end)=)".+"([[:space:]]|$)"
 
 # Colors
 icolor yellow "^[[:space:]]*i?color[[:space:]]*(bright)?(white|black|red|blue|green|yellow|magenta|cyan|normal)?(,(white|black|red|blue|green|yellow|magenta|cyan|normal))?\>"
@@ -882,11 +894,14 @@ icolor cyan start="[$@%]" end="( |[^0-9A-Z_]|-)"
 color yellow "".*"|qq\|.*\|"
 color white "[sm]/.*/"
 color white start="(^use| = new)" end=";"
-color green "#.*"
+
+# Comments.
+color green "(^|[[:space:]])#.*"
+
 color yellow start="<< 'STOP'" end="STOP"
 ## Here is an example for PHP.
 
-syntax php "\.ph(p[23457s~]?|tml)$"
+syntax php "\.(php[23457s~]?|phtml|ctp)$"
 magic "PHP script"
 comment "//"
 
@@ -933,7 +948,7 @@ color brightmagenta "\<(Project\-Id\-Version|Report\-Msgid\-Bugs\-To|Last\-Trans
 color cyan "\<(POT\-Creation\-Date|PO\-Revision\-Date|MIME\-Version|Content\-Type|Content\-Transfer\-Encoding)\>"
 # Encodings and numbers.
 color yellow "\<(UTF|ISO|Windows|Mac|IBM)-[0-9]+"
-color yellow "[0-9]|pre[0-9]|[0-9]bit"
+color yellow "\<((pre|rc)?[0-9]+|[0-9]bit)\>"
 # Msgids.
 color brightblue "^(msgid|msgid_plural|msgstr)\>"
 # Tags.
@@ -943,7 +958,7 @@ color yellow " (no-)?[-[:alpha:]]+-format(,|$)"
 color brightmagenta "%([1-9]\$)?[a-z]*"
 # Quotes and escaped characters.
 color yellow "\""
-color cyan "\\[abcefnrtv"\]"
+color cyan "\\([abcefnrtv"\]|x[0-9abcdefABCDEF]{2}|[0-7]{3})"
 # Reminders.
 color brightwhite,yellow "(FIXME|TODO|XXX)"
 # Obsolete strings.
@@ -1062,14 +1077,15 @@ color brightcyan "\<(exec|print)([[:blank:]]|$)"
 # Special values.
 color brightmagenta "\<(False|None|True)\>"
 
-# Single-quoted strings.
-color brightgreen "'([^'\]|\\.)+'"
-color brightgreen ""([^"\]|\\.)+""
+# Mono-quoted strings.
+color brightgreen "'([^'\]|\\.)*'|'''"
+color brightgreen ""([^"\]|\\.)*"|""""
+color normal "'''|""""
 # Comments.
 color brightred "(^|[[:blank:]])#.*"
 # Triple-quoted strings.
 color brightgreen    start="'''([^'),]|$)" end="(^|[^(\])'''"
-color brightgreen start="\"\"\"([^"),]|$)" end="(^|[^(\])\"\"\""
+color brightgreen    start=""""([^"),]|$)" end="(^|[^(\])""""
 
 # Reminders.
 color brightwhite,yellow "(FIXME|TODO|XXX)"
@@ -1250,16 +1266,6 @@ color brightred "\$\{?[0-9A-Za-z_!@#$*?-]+\}?"
 color ,green "[[:space:]]+$"
 # Comments:
 color cyan "^[[:space:]]*#.*"
-## Here is a short example for TeX files.
-
-syntax tex "\.tex$"
-magic "(La)?TeX document"
-linter chktex -v0 -q -I
-comment "%"
-
-icolor green "\\.|\\[A-Z]*"
-color magenta "[{}]"
-color blue "(^|[^\])%.*"
 ## Here is an example for Texinfo files.
 
 syntax texinfo "\.texi$"
@@ -1281,6 +1287,16 @@ color green "@c[[:space:]]+.*"
 
 # Trailing whitespace.
 color ,green "[[:space:]]+$"
+## Here is a short example for TeX files.
+
+syntax tex "\.tex$"
+magic "(La)?TeX document"
+linter chktex -v0 -q -I
+comment "%"
+
+icolor green "\\.|\\[A-Z]*"
+color magenta "[{}]"
+color blue "(^|[^\])%.*"
 ## Here is an example for XML files.
 
 syntax xml "\.([jrsx]html?|jnlp|mml|pom|rng|sgml?|svg|w[as]dl|wsdd|xjb|xml|xs(d|lt?)|xul)$"
