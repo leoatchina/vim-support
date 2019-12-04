@@ -75,10 +75,12 @@ GTAGS(1)                    General Commands Manual                   GTAGS(1)
               with the [1m-u [22mcommand.
 
        [1m-O[22m, [1m--objdir[0m
-              Use BSD-style objdir as the location of tag files.  If '$MAKEOB-
-              JDIRPREFIX' directory  exists,  [1mgtags  [22mcreates  '$MAKEOBJDIRPRE-
-              FIX/<current  directory>'  directory  and makes tag files in it.
-              If [4mdbpath[24m is specified, this option is ignored.
+              Use  BSD-style  obj  directory as the location of tag files.  If
+              [1mGTAGSOBJDIRPREFIX  [22mis  set  and  '$GTAGSOBJDIRPREFIX'  directory
+              exists,  [1mgtags  [22mcreates '$GTAGSOBJDIRPREFIX/<current directory>'
+              directory and makes tag files in it.  Though you can use [1mMAKEOB-[0m
+              [1mJDIRPREFIX  [22minstead  of [1mGTAGSOBJDIRPREFIX[22m, it is deprecated.  If
+              [4mdbpath[24m is specified, this option is ignored.
 
        [1m--single-update [4m[22mfile[0m
               Update tag files for a single file.  It is considered that  [4mfile[0m
@@ -88,9 +90,15 @@ GTAGS(1)                    General Commands Manual                   GTAGS(1)
        [1m--skip-unreadable[0m
               Skip unreadable files.
 
+       [1m--skip-symlink [22m[=[4mtype[24m]
+              Skip symbolic links. If [4mtype[24m is  'f'  then  skip  only  symbolic
+              links  for  file,  else if 'd' then skip only symbolic links for
+              directory.  The default value  of  [4mtype[24m  is  'a'  (all  symbolic
+              links).
+
        [1m--sqlite3[0m
-              Use Sqlite 3 API to make tag files. By default, BSD/DB 1.85  API
-              is  used.   To  use  this  option,  you need to invoke configure
+              Use  Sqlite 3 API to make tag files. By default, BSD/DB 1.85 API
+              is used.  To use this  option,  you  need  to  invoke  configure
               script with [1m--with-sqlite3 [22min the build phase.
 
        [1m--statistics[0m
@@ -105,7 +113,7 @@ GTAGS(1)                    General Commands Manual                   GTAGS(1)
        [1m-w[22m, [1m--warning[0m
               Print warning messages.
 
-       [4mdbpath[24m The directory in which tag files are generated.  The default  is
+       [4mdbpath[24m The  directory in which tag files are generated.  The default is
               the current directory.
 
 [1mEXAMPLES[0m
@@ -132,8 +140,8 @@ GTAGS(1)                    General Commands Manual                   GTAGS(1)
               The list of candidates of target files.
 
        '.notfunction'
-              The  list  of  symbols  which is not a definition.  If this file
-              exists in the project root directory, [1mgtags [22mdoes not regard  the
+              The list of symbols which is not a  definition.   If  this  file
+              exists  in the project root directory, [1mgtags [22mdoes not regard the
               symbols listed in this file as definitions.
 
 [1mENVIRONMENT[0m
@@ -146,59 +154,61 @@ GTAGS(1)                    General Commands Manual                   GTAGS(1)
               Configuration file.
 
        [1mGTAGSFORCECPP[0m
-              If  this  variable  is  set,  each  file whose suffix is '.h' is
+              If this variable is set, each  file  whose  suffix  is  '.h'  is
               treated as a C++ source file.
 
        [1mGTAGSFORCEENDBLOCK[0m
-              If this variable is set, each } at the first column  brings  end
+              If  this  variable is set, each } at the first column brings end
               of block of 0 level.
 
        [1mGTAGSLABEL[0m
               Configuration label. The default is 'default'.
 
        [1mGTAGSLOGGING[0m
-              If  this  variable  is  set, '$GTAGSLOGGING' is used as the path
+              If this variable is set, '$GTAGSLOGGING' is  used  as  the  path
               name of a log file. There is no default value.
 
        [1mGTAGS_COMMANDLINE[0m
               This  variable  can  only  be  referenced  from  the  hook  (see
-              gtags_hook).   [1mGtags [22msets its own effective command line to this
-              variable before calling the hook. Each argument is separated  by
+              gtags_hook).  [1mGtags [22msets its own effective command line to  this
+              variable  before calling the hook. Each argument is separated by
               whitespace, and real whitespace is represented as '%20'. This is
               read only.
 
        [1mGTAGS_OPTIONS[0m
               The value of this variable is inserted in the head of arguments.
 
-       [1mMAKEOBJDIR[0m
-              If this variable is set, '$MAKEOBJDIR' is used as  the  name  of
-              BSD-style objdir. The default is 'obj'.
+       [1mGTAGSOBJDIR[0m
+              If  this  variable  is  set, it is used as the name of BSD-style
+              objdir.  The default is 'obj'.  Though you  can  use  [1mMAKEOBJDIR[0m
+              instead of [1mGTAGSOBJDIR[22m, it is deprecated.
 
-       [1mMAKEOBJDIRPREFIX[0m
-              If this variable is set, '$MAKEOBJDIRPREFIX' is used as the pre-
-              fix of BSD-style objdir. The default is '/usr/obj'.
+       [1mGTAGSOBJDIRPREFIX[0m
+              If  this  variable is set, it is used as the prefix of BSD-style
+              objdir.  The default is '/usr/obj'.  Though you can use  [1mMAKEOB-[0m
+              [1mJDIRPREFIX [22minstead of [1mGTAGSOBJDIRPREFIX[22m, it is deprecated.
 
-       [1mTMPDIR [22mThe location used to stored  temporary  files.  The  default  is
+       [1mTMPDIR [22mThe  location  used  to  stored  temporary files. The default is
               '/tmp'.
 
 [1mCONFIGURATION[0m
-       The  following  configuration  variables affect the execution of [1mgtags[22m.
-       You can see the default value  for  each  variable  with  the  [1m--config[0m
+       The following configuration variables affect the  execution  of  [1mgtags[22m.
+       You  can  see  the  default  value  for each variable with the [1m--config[0m
        option.
 
        gtags_parser (comma separated list)
               Specify the mapping of language names and plug-in parsers.  Each
-              part delimited by the comma  consists  of  a  language  name,  a
-              colon,  the  shared object path, an optional colon followed by a
-              function name.  If the function name is not specified,  'parser'
-              is  assumed.  As a special exception, [1mgtags [22mcollects values from
-              multiple gtags_parser variables.  For these mappings, the  first
+              part  delimited  by  the  comma  consists  of a language name, a
+              colon, the shared object path, an optional colon followed  by  a
+              function  name.  If the function name is not specified, 'parser'
+              is assumed.  As a special exception, [1mgtags [22mcollects values  from
+              multiple  gtags_parser variables.  For these mappings, the first
               match is adopted.
 
        gtags_hook (command line)
               Specify a command line which should be executed at the beginning
               of [1mgtags [22mafter loading configuration file. You can use this hook
-              to  update  'gtags.files'  dynamically.  "./" in it always means
+              to update 'gtags.files' dynamically.  "./" in  it  always  means
               the project root directory, since [1mgtags [22mis always invoked there.
 
        icase_path (boolean)
@@ -206,38 +216,38 @@ GTAGS(1)                    General Commands Manual                   GTAGS(1)
               affected by this capability.
 
        langmap (comma separated list)
-              Language  mapping.  Each  comma-separated map consists of a lan-
-              guage name, a colon, and a list of  file  extensions.   You  can
-              specify  a  glob pattern surrounded by parentheses instead of an
-              extension for the files without extensions (e.g.  Make:([Mm]ake-
-              file).mak.mk).   As  a  special exception, [1mgtags [22mcollects values
-              from multiple langmap variables.  For these mappings, the  first
+              Language mapping. Each comma-separated map consists  of  a  lan-
+              guage  name,  a  colon,  and a list of file extensions.  You can
+              specify a glob pattern surrounded by parentheses instead  of  an
+              extension  for the files without extensions (e.g. Make:([Mm]ake-
+              file).mak.mk).  As a special exception,  [1mgtags  [22mcollects  values
+              from  multiple langmap variables.  For these mappings, the first
               match is adopted.  Default mapping is:
               'c:.c.h,yacc:.y,asm:.s.S,java:.java,cpp:.c++.cc.hh.cpp.cxx.hxx.hpp.C.H,php:.php.php3.phtml'.
 
        skip (comma separated list)
-              [1mGtags [22mskips files and directories which are given in this  list.
+              [1mGtags  [22mskips files and directories which are given in this list.
               As a special exception, [1mgtags [22mcollects values from multiple skip
-              variables.  If the value ends with  '/',  it  is  assumed  as  a
-              directory  and  [1mgtags  [22mskips  all files under it.  The value may
+              variables.   If  the  value  ends  with  '/', it is assumed as a
+              directory and [1mgtags [22mskips all files under  it.   The  value  may
               include glob patterns (*, ?, [...], [!...], [^...]).
 
               If the value starts with '/', it is assumed a relative path name
               from the root directory of the project. You cannot use glob pat-
-              terns for a path name. However, this direction  is  out-of-date,
+              terns  for  a path name. However, this direction is out-of-date,
               and is not recommended. Instead, you can use [1m-f [22moption which can
-              be combined with [1mfind[22m(1). Since  [1mfind[22m(1)  has  rich  options  to
-              select  files,  you  can do everything. Additionally, this tech-
-              nique can also be applied to  any  other  tagging  systems  like
+              be  combined  with  [1mfind[22m(1).  Since  [1mfind[22m(1) has rich options to
+              select files, you can do everything.  Additionally,  this  tech-
+              nique  can  also  be  applied  to any other tagging systems like
               [1mctags[22m(1), [1mcscope[22m(1), etc.
 
-              Skip   list   is   also   effective  when  you  use  the  [1m-f  [22mor
+              Skip  list  is  also  effective  when  you   use   the   [1m-f   [22mor
               'gtags.files'.
 
 [1mDIAGNOSTICS[0m
        [1mGtags [22mexits with a non-0 value if an error occurred, 0 otherwise.
 
-       Note that files created by [1mgtags [22mwith a non-zero exit  code  should  be
+       Note  that  files  created by [1mgtags [22mwith a non-zero exit code should be
        considered corrupted.
 
 [1mSEE ALSO[0m
@@ -250,7 +260,7 @@ GTAGS(1)                    General Commands Manual                   GTAGS(1)
        'GTAGS' and 'GRTAGS' are very large.  In advance of using this command,
        check the space of your disk.
 
-       Assembly support is far from complete.  It extracts  only  ENTRY()  and
+       Assembly  support  is  far from complete.  It extracts only ENTRY() and
        ALTENTRY() from source file.  Probably valid only for FreeBSD and Linux
        kernel source.
 
@@ -264,4 +274,4 @@ GTAGS(1)                    General Commands Manual                   GTAGS(1)
 
 
 
-GNU Project                     September 2016                        GTAGS(1)
+GNU Project                        June 2018                          GTAGS(1)
